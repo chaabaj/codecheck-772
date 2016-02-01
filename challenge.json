@@ -1,0 +1,12 @@
+{
+  "editable": [
+    ".gitignore",
+    "codecheck.yml",
+    "answer.md"
+  ],
+  "ignores": [
+    "app/*"
+  ],
+  "test": "mocha spec/*",
+  "allowNewFile": true
+}

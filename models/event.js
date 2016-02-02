@@ -14,9 +14,9 @@ const EventModel = {
           }
         },
         order : 'start_date ASC'
-      })
+      });
     });
-  }
+  },
   load(db) {
     logger.info('Loading definition of event model');
     this.dao = db.define('events', {

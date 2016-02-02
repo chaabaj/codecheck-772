@@ -1,25 +1,20 @@
-import Validator from 'schema-validator';
-import validatorMiddleware from '../middlewares/validator.js';
-import LoginController from '../controllers/login.js';
-import logger from 'winston';
+'use strict';
 
-const loginValidator = new Validator({
-  email : {
-    type : String,
-    required : true,
-    test : /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/
-  },
-  password : {
-    type : String,
-    required : true
-  }
+const validatorMiddleware = require('../middlewares/validator.js');
+const LoginController = require('../controllers/login.js');
+const logger = require('winston');
+const Joi = require('joi');
+
+const loginSchema = Joi.object().keys({
+  email : Joi.string().email().required(),
+  password : Joi.string().required()
 });
 
-const login = (api) => {
+const loginRouter = (api) => {
   logger.info('Register login route');
   api.post('/auth/login',
-           [ validatorMiddleware(loginValidator) ],
+           [ validatorMiddleware(loginSchema, 'body') ],
            LoginController.login);
 }
 
-export default login;
+module.exports = loginRouter;

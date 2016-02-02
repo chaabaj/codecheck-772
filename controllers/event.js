@@ -1,5 +1,7 @@
-import EventModel from '../models/event.js';
-import filterObj from '../utils/filter-object.js';
+'use strict';
+
+const EventModel = require('../models/event.js');
+const logger = require('winston');
 
 const EventController = {
   list(req, res) {
@@ -8,13 +10,16 @@ const EventController = {
       limit : req.body.limit || undefined
     };
 
-    EventModel.search(req.body.from, searchOpts)
+    logger.info('Handle list event request with opts : ' + req.body);
+    EventModel.search(req.body.from, opts)
               .then((events) => res.send(events))
-              .catch((err) => res.send({
-                code : 500,
-                msg : 'Cannot retreive events'
+              .catch((err) => {
+                res.send({
+                  code : 500,
+                  msg : 'Cannot retreive events'
+                });
               });
   }
 }
 
-export default EventController;
+module.exports = EventController;

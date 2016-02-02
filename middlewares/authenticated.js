@@ -1,7 +1,8 @@
-import UserModel from '../models/user.js';
+'use strict';
 
+const UserModel = require('../models/user.js');
 
-export default function() {
+module.exports = () => {
   return (req, res, next) => {
     if (!req.headers.authorization) {
       return res.send(401, {

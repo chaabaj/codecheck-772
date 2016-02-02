@@ -1,11 +1,16 @@
+'use strict';
 
-export default function(validator) {
+const logger = require('winston');
+const Joi = require('joi');
+
+module.exports = (schema, field) => {
   return (req, res, next) => {
-    const result = validator.check(req.body);
-
-    if (result._error) {
-      return res.send(400, result);
-    }
-    next();
+    Joi.validate(req[field], schema, (err) => {
+      if (err) {
+        logger.info('error validation');
+        return res.status(400).end();
+      }
+      next();
+    });
   };
 }

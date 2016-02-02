@@ -1,5 +1,7 @@
-import Sequelize from 'sequelize';
-import logger from 'winston';
+'use strict';
+
+const Sequelize = require('sequelize');
+const logger = require('winston');
 
 const EventModel = {
   dao : null,
@@ -13,7 +15,7 @@ const EventModel = {
             $ge : startDate
           }
         },
-        order : 'start_date ASC'
+        order : 'start_date DESC'
       });
     });
   },
@@ -34,9 +36,10 @@ const EventModel = {
         field : 'start_date'
       }
     }, {
-      timestamps : false
+      timestamps : false,
+      underscored: true
     });
   }
 }
 
-export default EventModel;
+module.exports = EventModel;

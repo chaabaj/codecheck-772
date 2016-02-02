@@ -1,27 +1,32 @@
-import Validator from 'schema-validator';
-import validatorMiddleware from '../middlewares/validator.js';
-import EventController from '../controllers/event.js';
+'use strict';
 
-const searchEventValidator = new Validator({
-  from : {
-    type : Date,
-    required : true,
-  },
-  offset : {
-    type : Number,
-    min : 0
-  },
-  limit : {
-    type : Number,
-    min : 1
-  }
+const validatorMiddleware = require('../middlewares/validator.js');
+const EventController = require('../controllers/event.js');
+const logger = require('winston');
+const Joi = require('joi');
+
+const searchEventSchema = Joi.object().keys({
+  from : Joi.string().regex(/[0-9]{4}-[0-9]{2}-[0-9]{2}/).required(),
+  offset : Joi.number().integer().min(0),
+  limit : Joi.number().integer().min(1)
 });
 
-const login = (api) => {
+const parseOffsetAndLimit = (req, res, next) => {
+  if (req.query.offset) {
+    req.query.offset = parseInt(req.query.offset, 10);
+  }
+  if (req.query.limit) {
+    req.query.limit = parseInt(req.query.limit, 10);
+  }
+  next();
+};
+
+const eventRouter = (api) => {
   logger.info('Register event routes');
-  api.get('/auth/users/events',
-           [ validatorMiddleware(searchEventValidator) ],
+  api.get('/users/events',
+           [ parseOffsetAndLimit,
+             validatorMiddleware(searchEventSchema, 'query')],
            EventController.list);
 }
 
-export default login;
+module.exports = eventRouter;

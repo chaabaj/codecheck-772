@@ -1,10 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import config from './config/config.json';
-import R from 'ramda';
-import bodyParser from 'body-parser';
-import logger from 'winston';
-import Sequelize from 'sequelize';
+'use strict';
+
+const express = require('express');
+const cors = require('cors');
+const config = require('./config/config.json');
+const R = require('ramda');
+const bodyParser = require('body-parser');
+const logger = require('winston');
+const Sequelize = require('sequelize');
 
 
 const configureDb = () => {
@@ -23,7 +25,7 @@ const main = () => {
   const port = parseInt(config.host.split(':')[1], 10);
 
   api.use(bodyParser.json());
-  api.use(bodyParser.urlencoded());
+  api.use(bodyParser.urlencoded({ extended : true }));
   api.use(cors());
   logger.info('Loading routes...');
   require('./routes/index.js')(router);

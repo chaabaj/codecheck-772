@@ -1,7 +1,9 @@
-import Sequelize from 'sequelize';
-import uuid from 'uuid';
-import logger from 'winston';
-import sha1 from 'sha1';
+'use strict';
+
+const Sequelize = require('sequelize');
+const uuid = require('uuid');
+const logger = require('winston');
+const sha1 = require('sha1');
 
 const UserModel = {
   login(email, password) {
@@ -71,9 +73,10 @@ const UserModel = {
         field : 'token'
       }
     }, {
-      timestamps: false
+      timestamps: false,
+      underscored: true
     });
   }
 };
 
-export default UserModel;
+module.exports = UserModel;

@@ -1,10 +1,10 @@
+'use strict';
 
-
-import UserModel from '../models/user.js';
-import logger from 'winston';
+const UserModel = require('../models/user.js');
+const logger = require('winston');
 
 const LoginController = {
-  login(email, password) {
+  login(req, res) {
     logger.info('Handle login request');
     UserModel.login(req.body.email, req.body.password)
       .then((user) => {
@@ -20,4 +20,4 @@ const LoginController = {
   }
 }
 
-export default LoginController;
+module.exports = LoginController;

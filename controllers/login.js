@@ -20,4 +20,4 @@ const LoginController = {
   }
 }
 
-export default loginHandler;
+export default LoginController;

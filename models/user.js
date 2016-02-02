@@ -3,11 +3,11 @@ import uuid from 'uuid';
 import logger from 'winston';
 import sha1 from 'sha1';
 
-const User = {
+const UserModel = {
   login(email, password) {
     return new Promise((resolve, reject) => {
       logger.info('Find user with email : ' + email);
-      User.dao.findOne({
+      UserModel.dao.findOne({
         where: {
           email : email,
           password : sha1(password)
@@ -43,6 +43,7 @@ const User = {
   },
   dao : null,
   load(db) {
+    logger.info('Loading definition of user model');
     this.dao = db.define('users', {
       id : {
         type : Sequelize.INTEGER,
@@ -75,4 +76,4 @@ const User = {
   }
 };
 
-export default User;
+export default UserModel;

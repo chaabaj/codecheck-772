@@ -1,6 +1,7 @@
 import Validator from 'schema-validator';
 import validatorMiddleware from '../middlewares/validator.js';
-import loginHandler from '../controllers/login.js';
+import LoginController from '../controllers/login.js';
+import logger from 'winston';
 
 const loginValidator = new Validator({
   email : {
@@ -15,7 +16,10 @@ const loginValidator = new Validator({
 });
 
 const login = (api) => {
-  api.post('/auth/login', [ validatorMiddleware(loginValidator) ], loginHandler);
+  logger.info('Register login route');
+  api.post('/auth/login',
+           [ validatorMiddleware(loginValidator) ],
+           LoginController.login);
 }
 
 export default login;

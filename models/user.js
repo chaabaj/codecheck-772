@@ -1,19 +1,22 @@
 import Sequelize from 'sequelize';
 import uuid from 'uuid';
 import logger from 'winston';
+import sha1 from 'sha1';
 
 const User = {
   login(email, password) {
     return new Promise((resolve, reject) => {
       logger.info('Find user with email : ' + email);
-
-      this.dao.findAll({
+      User.dao.findOne({
         where: {
           email : email,
           password : sha1(password)
         }
       })
       .then((user) => {
+        if (!user) {
+          throw 'Email or password is incorrect';
+        }
         logger.info('User found name : ' + user.name);
         user.token = uuid.v4();
         return user.save();
@@ -28,10 +31,7 @@ const User = {
             group_id : user.group_id
           }
         });
-      }).catch((err) => {
-        logger.info('An error occured : ' + err);
-        reject(err);
-      });
+      }).catch((err) => reject(err));
     });
   },
   dao : null,
@@ -62,6 +62,8 @@ const User = {
         type : Sequelize.STRING,
         field : 'token'
       }
+    }, {
+      timestamps: false
     });
   }
 };

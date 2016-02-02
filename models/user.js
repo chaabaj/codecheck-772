@@ -34,6 +34,13 @@ const User = {
       }).catch((err) => reject(err));
     });
   },
+  findByToken(token) {
+    return User.dao.findOne({
+      where : {
+        token : token
+      }
+    });
+  },
   dao : null,
   load(db) {
     this.dao = db.define('users', {

@@ -6,10 +6,10 @@ const logger = require('winston');
 
 // setup models and make relation between model
 module.exports = (db) => {
-  UserModel.load(db);
-  EventModel.load(db);
+    UserModel.load(db);
+    EventModel.load(db);
 
-  logger.info('Build relation between models');
-  UserModel.dao.hasMany(EventModel.dao, { as : 'events', constraints : false });
-  EventModel.dao.belongsTo(UserModel.dao, { as : 'user' });
+    logger.info('Build relation between models');
+    UserModel.dao.hasMany(EventModel.dao, {as: 'events', constraints: false});
+    EventModel.dao.belongsTo(UserModel.dao, {as: 'user'});
 }

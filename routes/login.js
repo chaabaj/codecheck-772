@@ -15,7 +15,7 @@ const loginValidator = new Validator({
 });
 
 const login = (api) => {
-  api.post('/login', [ validatorMiddleware(loginValidator) ], loginHandler);
+  api.post('/auth/login', [ validatorMiddleware(loginValidator) ], loginHandler);
 }
 
 export default login;

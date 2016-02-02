@@ -1,19 +1,16 @@
 
-import sha1 from 'sha1';
-import User from '../models/user.js';
+
+import UserModel from '../models/user.js';
+import logger from 'winston';
 
 const loginHandler = (req, res) => {
-  const passwordHash = sha1(req.body.password);
-  const promise = User.model.findOne({
-    email : req.body.email,
-    password : passwordHash
-  });
-  promise.then((user) => res.send(user));
-  promise.catch((err) => {
-    res.statusCode = 403;
-    res.send({
-      msg : 'Email or password does not match'
-    });
+  logger.info('Handle login request');
+  UserModel.login(req.body.email, req.body.password).then((user) => {
+    logger.info('Success : ' + user);
+    res.send(user);
+  }).catch((err) => {
+    logger.info('Error : ' + error);
+    res.status(500).send(err);
   });
 }
 

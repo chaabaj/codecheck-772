@@ -31,7 +31,7 @@ const main = () => {
     require('./routes/index.js')(router);
     logger.info('All routes are loaded');
     logger.info('Loading models...')
-    require('./models/index.js')(db);
+    require('./dao/index.js')(db);
     logger.info('All models are loaded');
     logger.info('Listening on port : ' + port);
     api.use('/api', router);

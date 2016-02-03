@@ -4,12 +4,17 @@ const Sequelize = require('sequelize');
 const uuid = require('uuid');
 const logger = require('winston');
 const sha1 = require('sha1');
+const UserDao = require('../dao/user.js');
 
 const UserModel = {
+    groups : {
+        USER : 1,
+        COMPANY : 2
+    },
     login(email, password) {
         return new Promise((resolve, reject) => {
             logger.info('Find user with email : ' + email);
-            UserModel.dao.findOne({
+            UserDao.instance.findOne({
                 where: {
                     email: email,
                     password: sha1(password)
@@ -37,44 +42,10 @@ const UserModel = {
         });
     },
     findByToken(token) {
-        return User.dao.findOne({
+        return UserDao.instance.findOne({
             where: {
                 token: token
             }
-        });
-    },
-    dao: null,
-    load(db) {
-        logger.info('Loading definition of user model');
-        this.dao = db.define('users', {
-            id: {
-                type: Sequelize.INTEGER,
-                primaryKey: true,
-                field: "id"
-            },
-            name: {
-                type: Sequelize.STRING,
-                field: 'name'
-            },
-            password: {
-                type: Sequelize.STRING,
-                field: 'password'
-            },
-            email: {
-                type: Sequelize.STRING,
-                field: 'email'
-            },
-            group_id: {
-                type: Sequelize.INTEGER,
-                field: 'group_id'
-            },
-            token: {
-                type: Sequelize.STRING,
-                field: 'token'
-            }
-        }, {
-            timestamps: false,
-            underscored: true
         });
     }
 };

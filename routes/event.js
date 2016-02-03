@@ -22,10 +22,10 @@ const parseData = (field) => {
     return (req, res, next) => {
         logger.info('Parse event params query');
         if (req[field].offset) {
-            req[field].offset = parseInt(req.query.offset, 10);
+            req[field].offset = parseInt(req[field].offset, 10);
         }
         if (req[field].limit) {
-            req[field].limit = parseInt(req.query.limit, 10);
+            req[field].limit = parseInt(req[field].limit, 10);
         }
         next();
     };

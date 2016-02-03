@@ -18,26 +18,29 @@ const searchCompanyEventSchema = searchEventSchema.keys({
    token : Joi.string().required()
 });
 
-const parseData = (req, res, next) => {
-    if (req.query.offset) {
-        req.query.offset = parseInt(req.query.offset, 10);
-    }
-    if (req.query.limit) {
-        req.query.limit = parseInt(req.query.limit, 10);
-    }
-    next();
-};
+const parseData = (field) => {
+    return (req, res, next) => {
+        logger.info('Parse event params query');
+        if (req[field].offset) {
+            req[field].offset = parseInt(req.query.offset, 10);
+        }
+        if (req[field].limit) {
+            req[field].limit = parseInt(req.query.limit, 10);
+        }
+        next();
+    };
+}
 
 const eventRouter = (api) => {
     logger.info('Register event routes');
     api.get('/users/events', [
-            parseData,
+            parseData('query'),
             validator(searchEventSchema, 'query')
         ],
         EventController.list);
-    api.post('/api/companies/events', [
-            parseData,
-            validator(searchCompanyEventSchema, 'query'),
+    api.post('/companies/events', [
+            parseData('body'),
+            validator(searchCompanyEventSchema, 'body'),
             authenticated('body', UserModel.groups.COMPANY)
         ],
         EventController.listCompanyEvents);

@@ -1,6 +1,6 @@
 'use strict';
 
-const validatorMiddleware = require('../middlewares/validator.js');
+const validator = require('../middlewares/validator.js');
 const LoginController = require('../controllers/login.js');
 const logger = require('winston');
 const Joi = require('joi');
@@ -12,9 +12,7 @@ const loginSchema = Joi.object().keys({
 
 const loginRouter = (api) => {
     logger.info('Register login route');
-    api.post('/auth/login',
-        [validatorMiddleware(loginSchema, 'body')],
-        LoginController.login);
+    api.post('/auth/login', [validator(loginSchema, 'body')], LoginController.login);
 }
 
 module.exports = loginRouter;

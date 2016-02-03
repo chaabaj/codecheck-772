@@ -5,7 +5,6 @@ const EventController = require('../controllers/event.js');
 const UserModel = require('../models/user.js');
 const authenticated = require('../middlewares/authenticated.js');
 const logger = require('winston');
-const R = require('ramda');
 const Joi = require('joi');
 
 const searchEventSchema = Joi.object().keys({
@@ -15,7 +14,7 @@ const searchEventSchema = Joi.object().keys({
 });
 
 const searchCompanyEventSchema = searchEventSchema.keys({
-   token : Joi.string().required()
+    token: Joi.string().required()
 });
 
 const parseData = (field) => {

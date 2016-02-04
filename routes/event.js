@@ -19,7 +19,6 @@ const searchCompanyEventSchema = searchEventSchema.keys({
 
 const parseData = (field) => {
     return (req, res, next) => {
-        logger.info('Parse event params query');
         if (req[field].offset) {
             req[field].offset = parseInt(req[field].offset, 10);
         }

@@ -27,11 +27,6 @@ const main = () => {
     api.use(bodyParser.json());
     api.use(bodyParser.urlencoded({extended: true}));
     api.use(cors());
-    api.use((req, res, next) => {
-        console.info(req.method);
-        console.info(req.url);
-        next();
-    });
     logger.info('Loading routes...');
     require('./routes/index.js')(router);
     logger.info('All routes are loaded');

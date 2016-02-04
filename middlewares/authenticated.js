@@ -16,12 +16,11 @@ module.exports = (field, group_id) => {
             });
         }
 
-        logger.info('Token is : ' + req[field].token);
         UserModel.findByToken(req[field].token)
             .then((user) => {
                 if (user && group_id && group_id === user.group_id) {
                     req.user = user;
-                    console.log('OK');
+                    logger.info('User is authenticated and have the correct permission');
                     return next();
                 }
                 res.status(200).send(errMsg)

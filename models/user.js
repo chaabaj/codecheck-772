@@ -8,7 +8,7 @@ const UserDao = require('../dao/user.js');
 
 const UserModel = {
     groups : {
-        USER : 1,
+        STUDENT : 1,
         COMPANY : 2
     },
     login(email, password) {

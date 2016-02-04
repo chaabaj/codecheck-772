@@ -6,12 +6,8 @@ const logger = require('winston');
 const AttendDao = {
     instance: null,
     load(db) {
+        logger.info('Loading attend model definition...');
         this.instance = db.define('attends', {
-            id: {
-                type: Sequelize.INTEGER,
-                field: 'id',
-                primaryKey: true
-            },
             reserved_at: {
                 type: Sequelize.DATE,
                 field: 'reserved_at'
@@ -20,6 +16,7 @@ const AttendDao = {
             timestamps: false,
             underscored: true
         });
+        this.instance.removeAttribute('id');
     }
 };
 

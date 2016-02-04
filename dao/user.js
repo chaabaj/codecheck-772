@@ -6,7 +6,7 @@ const logger = require('winston');
 const UserDao = {
     instance : null,
     load(db) {
-        logger.info('Loading definition of user model');
+        logger.info('Loading user model definiton...');
         this.instance = db.define('users', {
             id: {
                 type: Sequelize.INTEGER,

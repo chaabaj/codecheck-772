@@ -6,7 +6,7 @@ const logger = require('winston');
 const EventDao = {
     instance : null,
     load(db) {
-        logger.info('Loading definition of event model');
+        logger.info('Loading event model definiton...');
         this.instance = db.define('events', {
             id: {
                 type: Sequelize.INTEGER,

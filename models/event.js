@@ -24,26 +24,41 @@ const EventModel = {
                 limit: opts.limit,
                 offset: opts.offset,
                 where: searchParams,
-                include : [{ model : UserDao.instance, as : 'user' }],
+                include: [{model: UserDao.instance, as: 'user'}],
                 order: 'start_date ASC'
-            })
-                .then((events) => {
-                    resolve(R.map((event) => {
-                        return {
-                            id: event.id,
-                            name: event.name,
-                            start_date: event.start_date,
-                            company: {
-                                id: event.user.id,
-                                name: event.user.name
-                            }
-                        };
-                    }, events));
-                })
-                .catch((err) => {
-                    console.info(err);
-                    reject(err);
-                });
+            }).then((events) => {
+                resolve(R.map((event) => {
+                    return {
+                        id: event.id,
+                        name: event.name,
+                        start_date: event.start_date,
+                        company: {
+                            id: event.user.id,
+                            name: event.user.name
+                        }
+                    };
+                }, events));
+            }).catch((err) => {
+                console.info(err);
+                reject(err);
+            });
+        });
+    },
+    findById(eventId) {
+        return new Promise((resolve, reject) => {
+            EventDao.instance.findOne({
+                where: {
+                    id: eventId
+                }
+            }).then((event) => {
+                if (event) {
+                    return resolve(event);
+                }
+                throw { type : 'NOT_FOUND' };
+            }).catch((err) => {
+                logger.info(err);
+                reject(err);
+            });
         });
     }
 }

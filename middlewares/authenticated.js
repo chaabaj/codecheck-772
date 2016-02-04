@@ -7,12 +7,12 @@ module.exports = (field, group_id) => {
     return (req, res, next) => {
         const errMsg = {
             code : 401,
-            msg : 'Forbidden access'
+            message : 'Forbidden access'
         };
 
         if (!req[field].token) {
             return res.status(401).send({
-                msg: "Not authorized"
+                message: "Not authorized"
             });
         }
 
@@ -21,6 +21,7 @@ module.exports = (field, group_id) => {
             .then((user) => {
                 if (user && group_id && group_id === user.group_id) {
                     req.user = user;
+                    console.log('OK');
                     return next();
                 }
                 res.status(200).send(errMsg)

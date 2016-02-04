@@ -5,6 +5,7 @@ const logger = require('winston');
 const R = require('ramda');
 const EventDao = require('../dao/event.js');
 const UserDao = require('../dao/user.js');
+const AttendDao = require('../dao/attend.js');
 
 
 const EventModel = {
@@ -24,10 +25,22 @@ const EventModel = {
                 limit: opts.limit,
                 offset: opts.offset,
                 where: searchParams,
-                include: [{model: UserDao.instance, as: 'user'}],
+                include: [
+                    {
+                        model: UserDao.instance,
+                        as: 'user'
+                    },
+                    {
+                        model: AttendDao.instance,
+                        as: 'attendees',
+                        attributes : [[Sequelize.fn('count', Sequelize.col('attendees.event_id')), 'count']]
+                    }
+                ],
+                group : ['events.id'],
                 order: 'start_date ASC'
             }).then((events) => {
-                resolve(R.map((event) => {
+                events = events.filter((event) => event.user != null);
+                resolve(events.map((event) => {
                     return {
                         id: event.id,
                         name: event.name,
@@ -35,9 +48,10 @@ const EventModel = {
                         company: {
                             id: event.user.id,
                             name: event.user.name
-                        }
+                        },
+                        number_of_attendees : event.attendees[0].dataValues.count
                     };
-                }, events));
+                }));
             }).catch((err) => {
                 console.info(err);
                 reject(err);

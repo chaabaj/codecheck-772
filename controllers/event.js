@@ -11,7 +11,7 @@ const EventController = {
               offset : params.offset || 0,
               limit : params.limit || undefined
           },
-          dateFrom : moment(params.from, 'YYYY-MM-DD').toDate()
+          dateFrom : moment(params.from, 'YYYY-MM-DD').hours(0).minutes(0).toDate()
         };
     },
     list(req, res) {

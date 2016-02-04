@@ -12,8 +12,10 @@ module.exports = (db) => {
     AttendDao.load(db);
 
     logger.info('Build relation between models');
-    UserDao.instance.hasMany(EventDao.instance, {as: 'events', constraints: false});
-    EventDao.instance.belongsTo(UserDao.instance, {as: 'user'});
-    AttendDao.instance.belongsTo(UserDao.instance, {as : 'user'});
-    AttendDao.instance.belongsTo(EventDao.instance, {as : 'event'});
-}
+    UserDao.instance.hasMany(EventDao.instance, { as: 'events'});
+    UserDao.instance.hasMany(AttendDao.instance, { as : 'attendees' });
+    EventDao.instance.hasMany(AttendDao.instance, { as : 'attendees' });
+    EventDao.instance.belongsTo(UserDao.instance, { as: 'user', constraints : false });
+    AttendDao.instance.belongsTo(UserDao.instance, { as : 'user', constraints : false });
+    AttendDao.instance.belongsTo(EventDao.instance, { as : 'event', constraints : false });
+};

@@ -2,8 +2,9 @@
 
 const UserModel = require('../models/user.js');
 const logger = require('winston');
+const userStorage = require('../storage/users.js');
 
-module.exports = (field, group_id) => {
+module.exports = (field, groupId) => {
     return (req, res, next) => {
         const errMsg = {
             code : 401,
@@ -15,16 +16,22 @@ module.exports = (field, group_id) => {
                 message: "Not authorized"
             });
         }
+        const userId = userStorage[req[field].token];
 
-        UserModel.findByToken(req[field].token)
+        if (!userId) {
+            logger.info('User not logged');
+            return res.send(errMsg);
+        }
+
+        UserModel.findById(userId)
             .then((user) => {
-                if (user && group_id && group_id === user.group_id) {
+                if (user && groupId && groupId === user.group_id) {
                     req.user = user;
                     logger.info('User is authenticated and have the correct permission');
                     return next();
                 }
-                res.status(200).send(errMsg)
+                res.send(errMsg)
             })
-            .catch(() => res.status(200).send(errMsg));
+            .catch(() => res.send(errMsg));
     };
 }

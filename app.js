@@ -13,7 +13,7 @@ const configureDb = () => {
     logger.info('Configuring database...');
     return new Sequelize('database', 'username', '', {
         dialect: 'sqlite',
-        logging: console.log,
+        logging: logger.info,
         storage: config.database.connection.filename
     });
 }

@@ -53,7 +53,6 @@ const EventModel = {
                     };
                 }));
             }).catch((err) => {
-                console.info(err);
                 reject(err);
             });
         });

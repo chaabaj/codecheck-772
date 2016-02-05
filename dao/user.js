@@ -28,10 +28,6 @@ const UserDao = {
             group_id: {
                 type: Sequelize.INTEGER,
                 field: 'group_id'
-            },
-            token: {
-                type: Sequelize.STRING,
-                field: 'token'
             }
         }, {
             timestamps: false,

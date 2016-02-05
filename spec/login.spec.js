@@ -71,7 +71,7 @@ describe("login", function() {
   }).badRequestAll({
     "password": ["abc def", "あいうえおかきくけこ"],
   });
-  
+
   it("Wrong password", function(done) {
     host.api(API).params({
       "email": "user1@test.com",

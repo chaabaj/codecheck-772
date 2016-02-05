@@ -1,8 +1,10 @@
 build:
   - npm install
   - node sql/createdb.js
+  - cd app
+  - npm install
 web:
-  command: npm install; node main.js
+  command: node main.js
   port: 9000
   dir: app
   console: true

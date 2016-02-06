@@ -4,7 +4,7 @@ build:
   - cd app
   - npm install
 web:
-  command: node main.js
+  command: /bin/bash -c "npm install; node main.js"
   port: 9000
   dir: app
   console: true

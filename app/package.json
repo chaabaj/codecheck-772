@@ -25,6 +25,6 @@
   },
   "scripts": {
     "prestart" : "npm install",
-    "start": "node daemon.js start"
+    "start": "node main.js"
   }
 }

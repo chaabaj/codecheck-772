@@ -8,7 +8,7 @@ const bodyParser = require('body-parser');
 const logger = require('winston');
 const Sequelize = require('sequelize');
 
-const configBasePath = '../../../';
+const configBasePath = '../';
 
 const configureDb = () => {
     logger.info('Configuring database...');

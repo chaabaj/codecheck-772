@@ -1,0 +1,104 @@
+FORMAT: 1A
+HOST: http://polls.apiblueprint.org/
+
+# Event App
+
+Event app is an API for listing companies events and make able student to register to companies events
+
+## Login API [/login]
+
+### Login [POST]
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "string",
+            "password": "string"
+        }
++ Response 200 (application/json)
+
+        {
+            "code": 200,
+            "token": "82c52716-7b7a-4e8a-9715-61e70ada8ce4",
+            "user": {
+                "id": 1,
+                "name": "Apple Inc.",
+                "group_id": 2
+            }
+        }
+
+## Event API [/events]
+
+
+
+### List all events [GET /users/events/{from}{?offset}{?limit}]
+
+List all companies events
+
++ Parameters
+    + from - from date to search
+    + offset (optional) - offset to start for the result
+    + limit (optional) - limit the number of results
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 200,
+                "events": [{
+                    "id": 1,
+                    "name": "Givery Event1",
+                    "start_date": "2015-04-19 14::00::00",
+                    "company": {
+                        "id": 1,
+                        "name": "givery Inc."
+                    }
+                }]
+            }
+
+### List only company events [GET /companies/events/{from}{?offset}{?limit}]
+
++ Parameters
+    + from - from date to search
+    + offset (optional) - offset to start for the result
+    + limit (optional) - limit the number of results
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "code": 200,
+                "events": [{
+                    "id": 1,
+                    "name": "Givery Event1",
+                    "start_date": "2015-04-19 14::00::00",
+                    "company": {
+                        "id": 1,
+                        "name": "givery Inc.",
+                        "number_of_attendees" : 30
+                    }
+                }]
+            }
+            
+## Reservation API [/reserve]
+
+### Reserve or unreserve an event [POST /users/reserve]
+
+Reserve API is used by student to reserve or unreserve a place for a company event
+
+If the reserve parameter is true it will reserve a place otherwise it will unreserve
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "token": "82c52716-7b7a-4e8a-9715-61e70ada8ce4",
+            "event_id": 1,
+            "reserve": true
+        }
++ Response 200 (application/json)
+
+        {
+            "code": 200,
+            "message": "Reserved"
+        }

@@ -2,15 +2,17 @@
 
 const Sequelize = require('sequelize');
 const logger = require('winston');
-const R = require('ramda');
 const EventDao = require('../dao/event.js');
 const UserDao = require('../dao/user.js');
 const AttendDao = require('../dao/attend.js');
 
-
+/**
+ * @desc Event model for finding events
+ * @type {{search, findById}}
+ */
 const EventModel = {
     search(startDate, opts) {
-        console.log('searching with limit : ' + opts.limit + ' offset : ' + opts.offset);
+        logger.log('searching with limit : ' + opts.limit + ' offset : ' + opts.offset);
         return new Promise((resolve, reject) => {
             const searchParams = {
                 start_date: {

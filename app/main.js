@@ -8,9 +8,13 @@ const bodyParser = require('body-parser');
 const logger = require('winston');
 const Sequelize = require('sequelize');
 
-const configBasePath = '../';
-
+/**
+ * @desc setup the database
+ * @returns {Object} database connection instance
+ */
 const configureDb = () => {
+    const configBasePath = '../';
+
     logger.info('Configuring database...');
     return new Sequelize('database', 'username', '', {
         dialect: 'sqlite',
@@ -19,6 +23,9 @@ const configureDb = () => {
     });
 }
 
+/**
+ * @desc entry point of the server application
+ */
 const main = () => {
     let api = express();
     let db = configureDb();
@@ -43,6 +50,9 @@ const main = () => {
 logger.info('Starting server');
 main();
 
+/**
+ * catch unCaughtException and report it
+ */
 process.on('uncaughtException', (err) => {
     logger.info('Fatal error : ' + err);
 });

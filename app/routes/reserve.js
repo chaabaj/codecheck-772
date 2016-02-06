@@ -7,6 +7,9 @@ const validator = require('../middlewares/validator.js');
 const ReserveController = require('../controllers/reserve.js');
 const UserModel = require('../models/user.js');
 
+/**
+ * @desc reserve schema for request validation
+ */
 const reserveSchema = Joi.object().keys({
     token: Joi.string().required(),
     event_id: Joi.number().integer().required(),
@@ -14,6 +17,10 @@ const reserveSchema = Joi.object().keys({
 });
 
 
+/**
+ * @desc register reserve route in the API
+ * @param api
+ */
 const reserveRouter = (api) => {
     logger.info('Register reserve route');
     api.post('/users/reserve', [

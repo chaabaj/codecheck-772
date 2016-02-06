@@ -6,6 +6,11 @@ const EventModel = require('../models/event.js');
 const AttendModel = require('../models/attend.js');
 const R = require('ramda');
 
+/**
+ * @desc generate an mapping between AttendModel error codes and controller codes
+ * @returns {{}}
+ * @private
+ */
 const _attendErrorTable = () => {
     let errorCodes = {};
 

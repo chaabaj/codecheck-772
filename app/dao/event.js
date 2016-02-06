@@ -3,6 +3,10 @@
 const Sequelize = require('sequelize');
 const logger = require('winston');
 
+/**
+ * @desc Event data access layer
+ * @type {{instance, load}}
+ */
 const EventDao = {
     instance : null,
     load(db) {

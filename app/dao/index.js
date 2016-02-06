@@ -5,7 +5,9 @@ const EventDao = require('./event.js');
 const AttendDao = require('./attend.js');
 const logger = require('winston');
 
-// setup models and make relation between model
+/**
+ * @desc Setup dao and build relationship between them
+ */
 module.exports = (db) => {
     UserDao.load(db);
     EventDao.load(db);

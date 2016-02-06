@@ -4,6 +4,12 @@ const UserModel = require('../models/user.js');
 const logger = require('winston');
 const userStorage = require('../storage/users.js');
 
+/**
+ * @desc build an function for checking if an user is authenticated
+ * @param field
+ * @param groupId
+ * @returns {Function} function to be used to check if the user is authenticated
+ */
 module.exports = (field, groupId) => {
     return (req, res, next) => {
         const errMsg = {

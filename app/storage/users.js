@@ -1,5 +1,5 @@
 /**
- * Created by jalalc on 2/5/16.
+ * @desc storage where logged user are stored
+ * @type {{}}
  */
-
 module.exports = {};

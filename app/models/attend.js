@@ -3,10 +3,14 @@
 const AttendDao = require('../dao/attend.js');
 const logger = require('winston');
 
+/**
+ * @desc Attend model for reserve and unreserve an event
+ * @type {{ErrorCodes: {ALREADY_RESERVED: number, NOT_RESERVED: number}, _checkIfAlreadyAttend, reserve, unreserve}}
+ */
 const AttendModel = {
-    ErrorCodes : {
-        ALREADY_RESERVED : 1,
-        NOT_RESERVED : 2
+    ErrorCodes: {
+        ALREADY_RESERVED: 1,
+        NOT_RESERVED: 2
     },
     _checkIfAlreadyAttend(user, event) {
         return new Promise((resolve, reject) => {
@@ -15,9 +19,8 @@ const AttendModel = {
                     user_id: user.id,
                     event_id: event.id
                 }
-            })
-                .then((attend) => resolve(attend.length > 0))
-                .catch((err) => reject(err));
+            }).then((attend) => resolve(attend.length > 0))
+              .catch((err) => reject(err));
         });
     },
     reserve(user, event) {
@@ -27,7 +30,7 @@ const AttendModel = {
                 .then((attended) => {
                     logger.info('Check if the event is already reserve by the user');
                     if (attended) {
-                        throw { type : AttendModel.ErrorCodes.ALREADY_RESERVED };
+                        throw {type: AttendModel.ErrorCodes.ALREADY_RESERVED};
                     }
                     logger.info('Create a reservation for the user');
                     return AttendDao.instance.create({
@@ -45,13 +48,13 @@ const AttendModel = {
                 .then((attended) => {
                     logger.info('Check if the user reserved for the event');
                     if (!attended) {
-                        throw { type : AttendModel.ErrorCodes.NOT_RESERVED };
+                        throw {type: AttendModel.ErrorCodes.NOT_RESERVED};
                     }
                     logger.info('Remove the reservation');
                     return AttendDao.instance.destroy({
-                        where : {
-                            user_id : user.id,
-                            event_id : event.id
+                        where: {
+                            user_id: user.id,
+                            event_id: event.id
                         }
                     });
                 })

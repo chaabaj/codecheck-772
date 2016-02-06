@@ -3,6 +3,10 @@
 const Sequelize = require('sequelize');
 const logger = require('winston');
 
+/**
+ * @desc User data access layer
+ * @type {{instance, load}}
+ */
 const UserDao = {
     instance : null,
     load(db) {

@@ -7,16 +7,27 @@ const authenticated = require('../middlewares/authenticated.js');
 const logger = require('winston');
 const Joi = require('joi');
 
+/**
+ * @desc search event schema for event search request validation
+ */
 const searchEventSchema = Joi.object().keys({
     from: Joi.date().format('YYYY-MM-DD').required(),
     offset: Joi.number().integer().min(0),
     limit: Joi.number().integer().min(1)
 });
 
+/**
+ * @desc search company event schema for company search event request validation
+ */
 const searchCompanyEventSchema = searchEventSchema.keys({
     token: Joi.string().required()
 });
 
+/**
+ * @desc parse request param for event search
+ * @param field field in the request where is the request parameters
+ * @returns {Function}
+ */
 const parseData = (field) => {
     return (req, res, next) => {
         if (req[field].offset) {
@@ -29,6 +40,10 @@ const parseData = (field) => {
     };
 }
 
+/**
+ * @desc register event search routes in the API
+ * @param api
+ */
 const eventRouter = (api) => {
     logger.info('Register event routes');
     api.get('/users/events', [

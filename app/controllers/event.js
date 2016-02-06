@@ -5,6 +5,10 @@ const logger = require('winston');
 const moment = require('moment');
 
 const EventController = {
+    /**
+     * @desc setup parameters for searching events
+     * @private
+     */
     _setup(params) {
         return {
           opts : {
@@ -18,7 +22,6 @@ const EventController = {
         const params = EventController._setup(req.query);
 
         logger.info('Handle list event list request');
-        logger.info(params);
         EventModel.search(params.dateFrom, params.opts).then((events) => {
             res.send({
                 code: 200,

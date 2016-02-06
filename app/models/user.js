@@ -8,6 +8,10 @@ const UserDao = require('../dao/user.js');
 const userStorage = require('../storage/users.js');
 const R = require('ramda');
 
+/**
+ * @desc user model for login and searching user
+ * @type {{groups: {STUDENT: number, COMPANY: number}, login, findById}}
+ */
 const UserModel = {
     groups: {
         STUDENT: 1,

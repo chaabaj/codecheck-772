@@ -23,7 +23,7 @@
     "moment": "^2.11.0"
   },
   "scripts": {
-    "prestart" : "npm install"
+    "prestart" : "npm install",
     "start": "node main.js"
-  },
+  }
 }

@@ -2,7 +2,7 @@
 
 ### 1. Use HTTP status code for categorize error instead of store an HTTP status code in the response
 
-  In the current spec we store the error code of a request in a field code in the response(sometimes not like in checking authentication). In new spec it will use the status code of the response to indicate the response status. It's make more easier to know the status of the response (http://www.restapitutorial.com/httpstatuscodes.html) instead having to check to status code in response
+  In the current spec we store the error code of a request in a field code in the response(sometimes not like in checking authentication). In new spec it will use the status code of the response to indicate the response status. It's make more easier to know the status of the response (http://www.restapitutorial.com/httpstatuscodes.html) instead having to check to status code in response.
 
 ### 2. Change the use of authentication token
   
@@ -57,5 +57,7 @@
 
 ### 5. Add a salt for hashing the password
 
-  Actually password are hashed with SHA-1 hash function without salt. If an attacker succeed to have an access to the database he can use a rainbow table to find the passwords. Using bcrypt even if a attacker succeed to have a access to the database he can't use a rainbow table to find the passwords. The drawback is the bcrypt function consume a lot of computing power to generate a encrypted password that we can store in the database. 
+  Actually password are hashed with SHA-1 hash function without salt. If an attacker succeed to have an access to the database he can use a rainbow table to find the passwords. Using bcrypt even if a attacker succeed to have a access to the database he can't use a rainbow table to find the passwords. The drawback is the bcrypt function consume a lot of computing power to generate an encrypted password.
+  
+
 

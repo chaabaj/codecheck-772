@@ -21,9 +21,9 @@ const reserveSchema = Joi.object().keys({
  * @desc register reserve route in the API
  * @param api
  */
-const reserveRouter = (api) => {
+const reserveRouter = (router) => {
     logger.info('Register reserve route');
-    api.post('/users/reserve', [
+    router.post('/users/reserve', [
         validator(reserveSchema, 'body'),
         authenticated('body', UserModel.groups.STUDENT)
     ], ReserveController.redirect);

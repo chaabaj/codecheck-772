@@ -44,14 +44,14 @@ const parseData = (field) => {
  * @desc register event search routes in the API
  * @param api
  */
-const eventRouter = (api) => {
+const eventRouter = (router) => {
     logger.info('Register event routes');
-    api.get('/users/events', [
+    router.get('/users/events', [
             parseData('query'),
             validator(searchEventSchema, 'query')
         ],
         EventController.list);
-    api.post('/companies/events', [
+    router.post('/companies/events', [
             parseData('body'),
             validator(searchCompanyEventSchema, 'body'),
             authenticated('body', UserModel.groups.COMPANY)

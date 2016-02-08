@@ -17,9 +17,9 @@ const loginSchema = Joi.object().keys({
  * @desc register login route in the API
  * @param api
  */
-const loginRouter = (api) => {
+const loginRouter = (router) => {
     logger.info('Register login route');
-    api.post('/auth/login', [validator(loginSchema, 'body')], LoginController.login);
+    router.post('/auth/login', [validator(loginSchema, 'body')], LoginController.login);
 }
 
 module.exports = loginRouter;

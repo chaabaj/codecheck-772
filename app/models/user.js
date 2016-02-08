@@ -47,11 +47,15 @@ const UserModel = {
         });
     },
     findById(id) {
-        return UserDao.instance.findOne({
-            where: {
-                id: id
-            }
+        return new Promise((resolve, reject) => {
+            UserDao.instance.findOne({
+                where: {
+                    id: id
+                }
+            }).then((user) => !R.isNil(user) ? resolve(user) : reject(user))
+              .catch((err) => reject(err));
         });
+
     }
 };
 

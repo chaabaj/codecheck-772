@@ -11,7 +11,7 @@ const LoginController = {
                 logger.info('Success send response to client');
                 res.send(user);
             }).catch((err) => {
-                logger.info('Send error back to client : ' + err);
+                logger.info('An unexcepted error happened : ' + err);
                 res.send({
                     code: 500,
                     msg: err

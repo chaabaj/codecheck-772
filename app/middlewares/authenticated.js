@@ -31,7 +31,7 @@ module.exports = (field, groupId) => {
 
         UserModel.findById(userId)
             .then((user) => {
-                if (user && groupId && groupId === user.group_id) {
+                if (groupId && groupId === user.group_id) {
                     req.user = user;
                     logger.info('User is authenticated and have the correct permission');
                     return next();

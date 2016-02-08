@@ -6,7 +6,7 @@ const moment = require('moment');
 
 const EventController = {
     /**
-     * @desc setup parameters for searching events
+     * @desc setup search parameters for searching events
      * @private
      */
     _setup(params) {

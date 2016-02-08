@@ -43,6 +43,7 @@ const main = () => {
     logger.info('All models are loaded');
     logger.info('Listening on port : ' + port);
     api.use('/api', router);
+    api.get('/', (req, res) => res.send(''));
     db.sync().then(() => api.listen(port))
         .catch(logger.error);
 };

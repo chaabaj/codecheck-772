@@ -17,6 +17,7 @@ import scala.concurrent.{ Future, ExecutionContext }
 class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implicit ec: ExecutionContext) {
   // We want the JdbcProfile for this provider
   private val dbConfig = dbConfigProvider.get[JdbcProfile]
+  private var authenticatedUsers = scala.collection.mutable.Map[String, Long]()
 
   // These imports are important, the first one brings db into scope, which will let you do the actual db operations.
   // The second one brings the Slick DSL into scope, which lets you define the table and other queries.
@@ -46,9 +47,34 @@ class UserRepository @Inject() (dbConfigProvider: DatabaseConfigProvider)(implic
     def * = (id, name, password, email, groupId) <> ((User.apply _).tupled, User.unapply)
   }
 
-  /**
-   * The starting point for all queries on the people table.
-   */
-  private val user = TableQuery[UserTable]
 
+  private val users = TableQuery[UserTable]
+
+  /**
+   * Register new authenticated user
+   */
+  def registerAuthUser(token : String, user : User) = {
+    authenticatedUsers(token) = user.id
+  }
+
+  /**
+   * Check if an user is authenticated
+   */
+  def isAuthenticated(token : String) : Boolean  = {
+    authenticatedUsers.contains(token)
+  }
+
+  /**
+   * Find user by id
+   */
+  def findById(id : Long) : Future[Option[User]] = db.run {
+    users.filter(_.id === id).result.headOption
+  }
+
+  /**
+   * Find user by email and password
+   */
+  def findByEmailAndPassword(email : String, password : String) : Future[Option[User]] = db.run {
+    users.filter(user => user.email === email && user.password === password).result.headOption
+  }
 }
